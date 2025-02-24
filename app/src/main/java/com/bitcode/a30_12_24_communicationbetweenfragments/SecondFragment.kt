@@ -16,6 +16,13 @@ class SecondFragment : Fragment(){
             fragmentSecondBinding.edtCity.setText(value)
         }
 
+    //way 3 - create an interface with a function inside it
+    interface OnCitySetListener {
+        fun onCitySet(text : String)
+    }
+
+    lateinit var onCitySetListener: OnCitySetListener           //reference of listener
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,9 +30,13 @@ class SecondFragment : Fragment(){
     ): View? {
         fragmentSecondBinding = FragmentSecondBinding.inflate(layoutInflater)
         fragmentSecondBinding.btnSendDataToFirstFragment.setOnClickListener {
-            //way 2
-            (requireActivity() as MainActivity).sendDataToFirstFragment(
-                fragmentSecondBinding.edtCity.text.toString())
+
+            //way 3
+            onCitySetListener.onCitySet(fragmentSecondBinding.edtCity.text.toString())
+
+//            //way 2
+//            (requireActivity() as MainActivity).sendDataToFirstFragment(
+//                fragmentSecondBinding.edtCity.text.toString())
 
             //way 1
 //            (parentFragmentManager.findFragmentById(R.id.fragmentFirst) as FirstFragment).text1 =

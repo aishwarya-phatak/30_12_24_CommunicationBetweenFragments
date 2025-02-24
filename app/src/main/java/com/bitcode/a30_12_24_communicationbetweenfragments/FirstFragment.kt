@@ -20,6 +20,13 @@ class FirstFragment : Fragment() {
             fragmentFirstBinding.edtName.setText(value)
         }
 
+    //way 3 - create an interface with a function inside it
+    interface OnNameSetListener{
+        fun onNameSet(text : String)
+    }
+
+    lateinit var onNameSetListener: OnNameSetListener   //reference of listener
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,9 +35,12 @@ class FirstFragment : Fragment() {
         fragmentFirstBinding = FragmentFirstBinding.inflate(layoutInflater)
         fragmentFirstBinding.btnSendDataToSecondFragment.setOnClickListener {
 
-            //way 2
-            (requireActivity() as MainActivity).sendDataToSecondFragment(
-                fragmentFirstBinding.edtName.text.toString())
+            //way 3
+            onNameSetListener.onNameSet(fragmentFirstBinding.edtName.text.toString())
+
+//            //way 2
+//            (requireActivity() as MainActivity).sendDataToSecondFragment(
+//                fragmentFirstBinding.edtName.text.toString())
 
 
             //way 1
